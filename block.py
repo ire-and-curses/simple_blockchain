@@ -12,11 +12,16 @@ from datetime import datetime
 
 
 def create_genesis_block():
+    '''Factory for simple genesis block, to seed the hashing for the subsequent
+       blockchain.'''
+
     return Block(idx=0, timestamp=datetime.utcnow(),
                  data="Genesis Block", prev_hash="0")
 
 
 def create_next_block(prev_block):
+    '''Simple factory to build test blocks linked by hash.'''
+
     next_idx = prev_block.idx + 1
     next_timestamp = datetime.utcnow()
     next_data = "This is block number {}'s data".format(str(next_idx))
@@ -26,6 +31,10 @@ def create_next_block(prev_block):
 
 
 class Block(object):
+    '''A Block is a very basic container which knows its chain position, has a
+       timestamp, stores arbitrary data, and has a link to the hash of the
+       previous Block in the chain.'''
+
     def __init__(self, idx, timestamp, data, prev_hash):
         self.idx       = idx
         self.timestamp = timestamp
@@ -52,11 +61,17 @@ class Block(object):
 
 
 if __name__ == "__main__":
+    '''Demonstrates a simple blockchain in action.'''
+
+    n_blocks = 10
+    print("Creating blockchain with {} blocks (plus one "
+           + "extra for dummy genesis block)\n".format(n_blocks))
+
     root = create_genesis_block()
 
     blockchain = [root]
     prev_block = root
-    for i in range(10):
+    for i in range(n_blocks):
         block = create_next_block(prev_block)
         blockchain.append(block)
         print("Added block {} with data '{}' and hash '{}' to blockchain".format(
@@ -64,5 +79,4 @@ if __name__ == "__main__":
 
         prev_block = block
 
-    print()
-    print("Final blockchain size = {}".format(len(blockchain)))
+    print("\nFinal blockchain size = {}".format(len(blockchain)))
