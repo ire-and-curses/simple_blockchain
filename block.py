@@ -19,7 +19,7 @@ def create_genesis_block():
 def create_next_block(prev_block):
     next_idx = prev_block.idx + 1
     next_timestamp = datetime.utcnow()
-    next_data = "This is block number {}'s data.".format(str(next_idx))
+    next_data = "This is block number {}'s data".format(str(next_idx))
 
     return Block(next_idx, next_timestamp, next_data, prev_block.hash)
 
@@ -54,9 +54,15 @@ class Block(object):
 if __name__ == "__main__":
     root = create_genesis_block()
 
+    blockchain = [root]
     prev_block = root
     for i in range(10):
         block = create_next_block(prev_block)
-        print(block.data, "Hash =", block.hash)
+        blockchain.append(block)
+        print("Added block {} with data '{}' and hash '{}' to blockchain".format(
+              block.idx, block.data, block.hash))
 
         prev_block = block
+
+    print()
+    print("Final blockchain size = {}".format(len(blockchain)))
