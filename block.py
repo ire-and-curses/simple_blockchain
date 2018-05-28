@@ -29,19 +29,17 @@ def create_next_block(prev_block):
     return Block(next_idx, next_timestamp, next_data, prev_block.hash)
 
 
-
 class Block(object):
     '''A Block is a very basic container which knows its chain position, has a
        timestamp, stores arbitrary data, and has a link to the hash of the
        previous Block in the chain.'''
 
     def __init__(self, idx, timestamp, data, prev_hash):
-        self.idx       = idx
+        self.idx = idx
         self.timestamp = timestamp
-        self.data      = data
+        self.data = data
         self.prev_hash = prev_hash
-        self.hash      = self.get_hash()
-
+        self.hash = self.get_hash()
 
     def get_hash(self):
         '''Simple hash function to uniquely identify each block. The hash
@@ -50,10 +48,10 @@ class Block(object):
         sha = hashlib.sha256()
         sha.update(
                     (
-                        str(self.idx) +
-                        str(self.timestamp) + 
-                        str(self.data) + 
-                        str(self.prev_hash)
+                      str(self.idx) +
+                      str(self.timestamp) +
+                      str(self.data) +
+                      str(self.prev_hash)
                      ).encode('utf-8')
                   )
 
@@ -64,8 +62,8 @@ if __name__ == "__main__":
     '''Demonstrates a simple blockchain in action.'''
 
     n_blocks = 10
-    print("Creating blockchain with {} blocks (plus one "
-           + "extra for dummy genesis block)\n".format(n_blocks))
+    print("Creating blockchain with {} blocks (plus one".format(n_blocks)
+          + " extra for dummy genesis block)\n")
 
     root = create_genesis_block()
 
